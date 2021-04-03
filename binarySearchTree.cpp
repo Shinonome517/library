@@ -105,7 +105,7 @@ bool Node::search(int64_t target){
 void Node::erase(int64_t target){
     //まずはそもそも存在するのかを考える
     node *nd = goDown(target);
-    while(nd != NULL){
+    if(nd->left == NULL )
 
     }
 
