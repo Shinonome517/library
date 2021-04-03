@@ -9,18 +9,18 @@
 */
 
 Node::Node(int64_t iniv){
-    tree = {iniv, NULL, NULL, NULL};
+    tree = {iniv, nullptr, nullptr, nullptr};
 }
 
 //目的のノードまで木を降りて、そのノードのポインタを返す
 /*
 返り値
     *対象の値があるとき：対象の値のノードのポインタ
-    *対象の値がないとき：対象の値が追加されるべきノードのNULLポインタ
+    *対象の値がないとき：対象の値が追加されるべきノードのnullptrポインタ
 */
 node *Node::goDown(int64_t target){
     node *nd = &tree;
-    while(nd != NULL || nd->key != target){
+    while(nd != nullptr || nd->key != target){
         if(target < nd->key){
             nd->parent = nd;
             nd = nd->left;
@@ -37,9 +37,9 @@ node *Node::goDown(int64_t target){
 //部分木内の最小値のノードのポインタを返す関数
 node *Node::minNd(node *parentNd){
     node *nd = parentNd;
-    while(nd->left == NULL && nd->right == NULL){
+    while(nd->left == nullptr && nd->right == nullptr){
         //left優先で木を降りる
-        if(nd->left != NULL){
+        if(nd->left != nullptr){
             nd->parent = nd;
             nd = nd->left;
         }
@@ -54,11 +54,11 @@ node *Node::minNd(node *parentNd){
 void Node::insert(int64_t target){
     node *nd = goDown(target);
 
-    if(nd == NULL){
+    if(nd == nullptr){
         node *nd = new node;
         nd->key = target;
-        nd->left = NULL;
-        nd->right = NULL;
+        nd->left = nullptr;
+        nd->right = nullptr;
     }
     else{
         //値はすでにあるので何もしない
@@ -69,7 +69,7 @@ bool Node::search(int64_t target){
     //while文で木を降りる
     node *nd = goDown(target);
 
-    if(nd == NULL){
+    if(nd == nullptr){
         return false;
     }
     else{
@@ -81,17 +81,17 @@ bool Node::search(int64_t target){
 void Node::erase(int64_t target){
     //まずはそもそも存在するのかを考える
     node *nd = goDown(target);
-    if(nd->left == NULL && nd->right == NULL){
-        //親ノード枝先のポインタをNULLで初期化しておく必要がある
+    if(nd->left == nullptr && nd->right == nullptr){
+        //親ノード枝先のポインタをnullptrで初期化しておく必要がある
         if(nd->parent->left->key == nd->key){
-            nd->parent->left = NULL;
+            nd->parent->left = nullptr;
         }
         else{
-            nd->parent->right = NULL;
+            nd->parent->right = nullptr;
         }
         delete nd;
     }
-    else if(nd->left == NULL){
+    else if(nd->left == nullptr){
         if(nd->parent->left->key == nd->key){
             nd->parent->left = nd->right;
             delete nd;
@@ -101,7 +101,7 @@ void Node::erase(int64_t target){
             delete nd;
         }
     }
-    else if (nd->right == NULL){
+    else if (nd->right == nullptr){
         if(nd->parent->left->key == nd->key){
             nd->parent->left = nd->left;
             delete nd;
@@ -115,11 +115,11 @@ void Node::erase(int64_t target){
         node *tempNd = minNd(nd);
         nd->key = tempNd->key;
         if(tempNd->parent->left->key == tempNd->key){
-            tempNd->parent->left = NULL;
+            tempNd->parent->left = nullptr;
             delete tempNd;
         }
         else{
-            tempNd->parent->right == NULL;
+            tempNd->parent->right == nullptr;
             delete tempNd;
         }
     }
