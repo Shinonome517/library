@@ -5,9 +5,10 @@
 using namespace std;
 
 
-//ノード変数の実装
+//ノード変数の実装（双方向リストのように実装する）
 struct node{
     int64_t key;
+    node *parent;
     node *left;
     node *right;
 };

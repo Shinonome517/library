@@ -9,7 +9,7 @@
 */
 
 Node::Node(int64_t iniv){
-    tree = {iniv, NULL, NULL};
+    tree = {iniv, NULL, NULL, NULL};
 }
 
 //目的のノードまで木を降りて、そのノードのポインタを返す
@@ -22,9 +22,11 @@ node *Node::goDown(int64_t target){
     node *nd = &tree;
     while(nd != NULL || nd->key != target){
         if(target < nd->key){
+            nd->parent = nd;
             nd = nd->left;
         }
         else{
+            nd->parent = nd;
             nd = nd->right;
         }
     }
@@ -38,9 +40,11 @@ node *Node::minNd(node *parentNd){
     while(nd->left == NULL && nd->right == NULL){
         //left優先で木を降りる
         if(nd->left != NULL){
+            nd->parent = nd;
             nd = nd->left;
         }
         else{
+            nd->parent = nd;
             nd = nd->right;
         }
     }
@@ -78,12 +82,45 @@ void Node::erase(int64_t target){
     //まずはそもそも存在するのかを考える
     node *nd = goDown(target);
     if(nd->left == NULL && nd->right == NULL){
+        //親ノード枝先のポインタをNULLで初期化しておく必要がある
+        if(nd->parent->left->key == nd->key){
+            nd->parent->left = NULL;
+        }
+        else{
+            nd->parent->right = NULL;
+        }
         delete nd;
     }
-    else if(nd->left == NULL || nd->right == NULL){
-        nd
+    else if(nd->left == NULL){
+        if(nd->parent->left->key == nd->key){
+            nd->parent->left = nd->right;
+            delete nd;
+        }
+        else{
+            nd->parent->right = nd->right;
+            delete nd;
+        }
     }
-
+    else if (nd->right == NULL){
+        if(nd->parent->left->key == nd->key){
+            nd->parent->left = nd->left;
+            delete nd;
+        }
+        else{
+            nd->parent->right = nd->left;
+            delete nd;
+        }
     }
-
+    else{
+        node *tempNd = minNd(nd);
+        nd->key = tempNd->key;
+        if(tempNd->parent->left->key == tempNd->key){
+            tempNd->parent->left = NULL;
+            delete tempNd;
+        }
+        else{
+            tempNd->parent->right == NULL;
+            delete tempNd;
+        }
+    }
 }
