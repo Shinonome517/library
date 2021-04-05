@@ -2,6 +2,7 @@
 #include <cstdint> //多分ここにNULLが定義されているので<cstddef>はincludeしなくてもいい
 #include <new>
 #include <cmath>
+#include <stack>
 using namespace std;
 
 

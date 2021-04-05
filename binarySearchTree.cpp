@@ -55,6 +55,7 @@ void Node::insert(int64_t target){
     node *nd = goDown(target);
 
     if(nd == nullptr){
+        ///ヌルポのままndに実体をもたせられない？
         node *nd = new node;
         nd->key = target;
         nd->left = nullptr;
@@ -120,6 +121,30 @@ void Node::erase(int64_t target){
         }
         else{
             tempNd->parent->right == nullptr;
+            delete tempNd;
+        }
+    }
+}
+
+Node::~Node(){
+
+    stack<node*> st;
+
+    //深さ優先で末端からdelete
+    st.push(&tree);
+    while(!st.empty()){
+
+        node *tempNd = st.top();
+        st.pop();
+
+        if(tempNd == nullptr){
+            //末端に到達したので何もしない
+        }
+        else{
+            //left優先でスタックに格納
+            st.push(tempNd->left);
+            st.push(tempNd->right);
+            //格納後にdelete
             delete tempNd;
         }
     }
