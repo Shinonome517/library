@@ -9,6 +9,7 @@
 */
 
 Node::Node(int64_t iniv){
+    cout << "constructor" << endl;
     tree = {iniv, nullptr, nullptr, nullptr};
 }
 
@@ -19,18 +20,24 @@ Node::Node(int64_t iniv){
     *対象の値がないとき：対象の値が追加されるべきノードのnullptrポインタ
 */
 node *Node::goDown(int64_t target){
+    //cout << "godown" << endl;
     node *nd = &tree;
-    while(nd != nullptr || nd->key != target){
+    //cout << nd << endl;
+    //cout << nd->left << endl;
+    while(nd != nullptr && nd->key != target){
         if(target < nd->key){
             nd->parent = nd;
             nd = nd->left;
+            //cout << nd << endl;
         }
         else{
             nd->parent = nd;
             nd = nd->right;
+            //cout << nd << endl;
         }
     }
 
+    //cout << "end godown" << endl;
     return nd;
 }
 
@@ -52,6 +59,7 @@ node *Node::minNd(node *parentNd){
 }
 
 void Node::insert(int64_t target){
+    //cout << "insert" << endl;
     node *nd = goDown(target);
 
     if(nd == nullptr){
@@ -67,6 +75,7 @@ void Node::insert(int64_t target){
 }
 
 bool Node::search(int64_t target){
+    //cout << "search" << endl;
     //while文で木を降りる
     node *nd = goDown(target);
 
@@ -80,6 +89,7 @@ bool Node::search(int64_t target){
 
 
 void Node::erase(int64_t target){
+    //cout << "erase" << endl;
     //まずはそもそも存在するのかを考える
     node *nd = goDown(target);
     if(nd->left == nullptr && nd->right == nullptr){
@@ -126,7 +136,33 @@ void Node::erase(int64_t target){
     }
 }
 
+void Node::showall(){
+
+    stack<node*> st;
+
+    //深さ優先で末端からdelete
+    st.push(&tree);
+    while(!st.empty()){
+
+        node *tempNd = st.top();
+        st.pop();
+
+        if(tempNd == nullptr){
+            //末端に到達したので何もしない
+        }
+        else{
+            //left優先でスタックに格納
+            st.push(tempNd->left);
+            st.push(tempNd->right);
+            //格納後にcout
+            cout << tempNd->key << " ";
+        }
+    }
+    cout << endl;
+}
+
 Node::~Node(){
+    cout << "destructor" << endl;
 
     stack<node*> st;
 

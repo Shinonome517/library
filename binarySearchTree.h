@@ -26,5 +26,6 @@ public:
     void insert(int64_t);
     bool search(int64_t);
     void erase(int64_t);
+    void showall();
     
 };
