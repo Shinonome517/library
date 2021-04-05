@@ -17,28 +17,36 @@ Node::Node(int64_t iniv){
 /*
 返り値
     *対象の値があるとき：対象の値のノードのポインタ
-    *対象の値がないとき：対象の値が追加されるべきノードのnullptrポインタ
+    *対象の値がないとき：対象の値が追加されるべきノードの親ノードのポインタ
 */
 node *Node::goDown(int64_t target){
     //cout << "godown" << endl;
     node *nd = &tree;
+    node *ndParent = tree.parent;
     //cout << nd << endl;
     //cout << nd->left << endl;
     while(nd != nullptr && nd->key != target){
         if(target < nd->key){
-            nd->parent = nd;
+            ndParent = nd;
+            //nd->parent = nd;
             nd = nd->left;
             //cout << nd << endl;
         }
         else{
-            nd->parent = nd;
+            ndParent = nd;
+            //nd->parent = nd;
             nd = nd->right;
             //cout << nd << endl;
         }
     }
 
     //cout << "end godown" << endl;
-    return nd;
+    if(nd == nullptr){
+        return ndParent;
+    }
+    else{
+        return nd;
+    }
 }
 
 //部分木内の最小値のノードのポインタを返す関数
@@ -62,15 +70,24 @@ void Node::insert(int64_t target){
     //cout << "insert" << endl;
     node *nd = goDown(target);
 
-    if(nd == nullptr){
-        ///ヌルポのままndに実体をもたせられない？
-        node *nd = new node;
-        nd->key = target;
-        nd->left = nullptr;
-        nd->right = nullptr;
+    if(nd->key == target){
+        //すでにtargetは存在するので何もしない
     }
     else{
-        //値はすでにあるので何もしない
+        if(target < nd->key){
+            nd->left = new node;
+            nd->left->key = target;
+            nd->left->parent = nd;
+            nd->left->left = nullptr;
+            nd->left->right = nullptr;
+        }
+        else{
+            nd->right = new node;
+            nd->right->key = target;
+            nd->right->parent = nd;
+            nd->right->left = nullptr;
+            nd->right->right = nullptr;
+        }
     }
 }
 
