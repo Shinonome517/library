@@ -11,14 +11,14 @@ void TorF(bool flag){
 
 int main(){
     cout << "start" << endl;
-    Node tree(7);
+    Node tree(7); tree.showall();
 
-    tree.insert(4);
-    tree.insert(12);
-    tree.insert(3);
-    tree.insert(5);
-    tree.insert(9);
-    tree.insert(15);
+    tree.insert(4); tree.showall();
+    tree.insert(12); tree.showall();
+    tree.insert(3); tree.showall();
+    tree.insert(5); tree.showall();
+    tree.insert(9); tree.showall();
+    tree.insert(15); tree.showall();
 
     TorF(tree.search(9)); //Yes
     TorF(tree.search(7)); //Yes
