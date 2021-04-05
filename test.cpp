@@ -1,6 +1,6 @@
 #include "binarySearchTree.h"
 
-string TorF(bool flag){
+void TorF(bool flag){
     if(flag){
         cout << "Yes" << endl;
     }
@@ -10,6 +10,7 @@ string TorF(bool flag){
 }
 
 int main(){
+    cout << "start" << endl;
     Node tree(7);
 
     tree.insert(4);
