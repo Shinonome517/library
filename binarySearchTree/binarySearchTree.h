@@ -3,6 +3,7 @@
 #include <new>
 #include <cmath>
 #include <stack>
+#include <string>
 using namespace std;
 
 
@@ -26,6 +27,6 @@ public:
     void insert(int64_t);
     bool search(int64_t);
     void erase(int64_t);
-    void showall();
+    string showall(node*);
     
 };

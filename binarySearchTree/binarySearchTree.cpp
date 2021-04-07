@@ -141,29 +141,10 @@ void Node::erase(int64_t target){
     }
 }
 
-void Node::showall(){
+//sort済みの数字を表示
+string Node::showall(node *nd){
 
-    stack<node*> st;
-
-    //深さ優先で末端からdelete
-    st.push(&tree);
-    while(!st.empty()){
-
-        node *tempNd = st.top();
-        st.pop();
-
-        if(tempNd == nullptr){
-            //末端に到達したので何もしない
-        }
-        else{
-            //left優先でスタックに格納
-            st.push(tempNd->right);
-            st.push(tempNd->left);
-            //格納後にcout
-            cout << tempNd->key << " ";
-        }
-    }
-    cout << endl;
+    return showall(nd->left) + to_string(nd->key) + showall(nd->right);
 }
 
 Node::~Node(){
