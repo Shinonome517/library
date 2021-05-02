@@ -3,6 +3,7 @@
 
 using namespace std;
 
-int main(){
-    
+DLL::DLL(int initialvalue){
+    head = new int;
+    cell = {initialvalue, head, nullptr};
 }

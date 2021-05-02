@@ -6,7 +6,7 @@ struct Cell{
 
 class DLL{
 public:
-    DLL();
+    DLL(int);
     ~DLL();
     bool search();
     void insert();
@@ -16,5 +16,5 @@ public:
 
 private:
     Cell cell;
-    
-}
+    int* head;
+};
