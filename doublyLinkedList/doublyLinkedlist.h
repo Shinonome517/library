@@ -1,20 +1,20 @@
-struct Cell{
+struct Node{
     int value;
-    int* prev;
-    int* next;
+    Node* prev;
+    Node* next;
 };
 
 class DLL{
 public:
-    DLL(int);
+    DLL();
     ~DLL();
     bool search();
     void insert();
-    void erase(); /*後に、返り値を出すように変更？*/
+    void erase();  /*後に、返り値を出すように変更？*/
     int minimum();
     int maximum();
 
 private:
-    Cell cell;
-    int* head;
+    Node node;
+    Node* head;
 };
