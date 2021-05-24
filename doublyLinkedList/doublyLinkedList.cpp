@@ -21,54 +21,65 @@ bool DLL::search(int num){
     return false;
 }
 
-void DLL::updatemax(int num){
+void DLL::update(int num){
     if(pmaximum == nullptr){
         *pmaximum = num;
     }
-    else{
-        if(*pmaximum < num){
-            *pmaximum = num;
-        }
-    }
-}
-
-void DLL::updatemin(int num){
     if(pminimum == nullptr){
         *pminimum = num;
     }
-    else{
-        if(*pminimum > num){
-            *pminimum = num;
-        }
+    if(*pmaximum < num){
+        *pmaximum = num;
+    }
+    if(*pminimum > num){
+        *pminimum = num;
     }
 }
 
 //ポインタの書き換え：計算量O(1)
 //prenodeのポインタを受け取り、prenodeの前に要素を追加する
 void DLL::insert(Node* pprenode, int num){
-    updatemax(num);
-    updatemin(num);
-    if(pprenode = head){
-        Node* pnewnode = new Node;
-        head -> prev = pnewnode;
-        pnewnode->value = num;
-        pnewnode->next = head;
+    update(num);
+    Node* pnewnode = new Node;
+    Node* pnextnode = pprenode->next;
+
+    pnewnode->next = pnextnode;
+    //headの次の要素だった場合の例外処理
+    if(pprenode == head){
         pnewnode->prev = nullptr;
-        head = pnewnode;
     }
     else{
-        Node* pnewnode = new Node ;
-        pprenode -> next -> prev = pnewnode;
-        pnewnode->value = num;
-        pnewnode->prev = pprenode;
-        pnewnode->next = pprenode->next;
-        pprenode->next = pnewnode;
-        
+        pnewnode->prev = pprenode; 
     }
+    pnextnode->prev = pnewnode;
+    pprenode->next = pnewnode;
 }
 
 //ポインタの書き換え:計算量O(1)
 //prenodeのポインタを受け取り、prenodeの前の構造体を削除して、その次とつなぐ
 void DLL::erase(Node* pprenode){
+    Node* perasenode = pprenode->next;
+    Node* pnextnode = perasenode->next;
+
+    pprenode->next = pnextnode;
+    pnextnode->prev = pprenode;
+
+    delete perasenode;
+}
+
+//debug用関数
+void DLL::showlist(){
+    Node* ptemp = head->next;
+    if(ptemp == nullptr){
+        std::cout << "None" << std::endl;
+        return;
+    }
+    std::cout << "[" << ptemp->value;
+    ptemp = ptemp->next;
+    while(ptemp != nullptr){
+        std::cout << ", " << ptemp->value;
+        ptemp = ptemp -> next;
+    }
+    std::cout << "]" << std::endl;
 
 }
