@@ -8,13 +8,15 @@ class DLL{
 public:
     DLL();
     ~DLL();
-    bool search();
-    void insert();
+    bool search(int);
+    void insert(Node*, int);
     void erase();  /*後に、返り値を出すように変更？*/
-    int minimum();
-    int maximum();
+    int* pminimum;
+    int* pmaximum;
 
 private:
+    void updatemax(int);
+    void updatemin(int);
     Node node;
     Node* head;
 };
