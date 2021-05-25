@@ -73,6 +73,10 @@ void DLL::erase(Node* perasenode){
     delete perasenode;
 }
 
+DLL::~DLL(){
+    
+}
+
 //debug用関数
 void DLL::showList(){
     Node* ptemp = head->next;
