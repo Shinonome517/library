@@ -10,15 +10,15 @@ DLL::DLL(){
 
 //線形探索：計算量O(n)
 //numという要素がこのリスト内に存在するかを判定するメソッド
-bool DLL::search(int num){
+Node* DLL::search(int num){
     Node* ptemp = head;
     while(ptemp != nullptr){
         if(ptemp->value == num){
-            return true;
+            return ptemp;
         }
         ptemp = head->next;
     }
-    return false;
+    return nullptr;
 }
 
 void DLL::update(int num){
@@ -51,24 +51,30 @@ void DLL::insert(Node* pprenode, int num){
     else{
         pnewnode->prev = pprenode; 
     }
-    pnextnode->prev = pnewnode;
+    //nextnodeが存在した時のみ（挿入位置が先頭でない時）
+    if(pnextnode != nullptr){
+        pnextnode->prev = pnewnode;
+    }
     pprenode->next = pnewnode;
 }
 
 //ポインタの書き換え:計算量O(1)
-//prenodeのポインタを受け取り、prenodeの前の構造体を削除して、その次とつなぐ
-void DLL::erase(Node* pprenode){
-    Node* perasenode = pprenode->next;
+//消したいノード（erasenode)のポインタを受け取り、前後をつないで、erasenodeを削除する
+void DLL::erase(Node* perasenode){
+    Node* pprenode = perasenode->prev;
     Node* pnextnode = perasenode->next;
 
     pprenode->next = pnextnode;
-    pnextnode->prev = pprenode;
+    //nextnodeが存在した時のみ（削除対象が先頭でない時）
+    if(pnextnode != nullptr){
+        pnextnode->prev = pprenode;
+    }
 
     delete perasenode;
 }
 
 //debug用関数
-void DLL::showlist(){
+void DLL::showList(){
     Node* ptemp = head->next;
     if(ptemp == nullptr){
         std::cout << "None" << std::endl;

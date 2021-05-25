@@ -8,16 +8,18 @@ class DLL{
 public:
     DLL();
     ~DLL();
-    bool search(int);
+    Node* search(int);
     void insert(Node*, int);
     void erase(Node*);  /*後に、返り値を出すように変更？*/
     int* pminimum;
     int* pmaximum;
+    Node* head;
 
     //for debug
-    void showlist();
+    void showList();
 
 private:
     void update(int);
-    Node* head;
 };
+
+//headをprivateにした時、その後ろにつなげた
