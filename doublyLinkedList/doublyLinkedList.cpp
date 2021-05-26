@@ -16,24 +16,31 @@ Node* DLL::search(int num){
         if(ptemp->value == num){
             return ptemp;
         }
-        ptemp = head->next;
+        ptemp = ptemp->next;
     }
     return nullptr;
 }
 
 void DLL::update(int num){
     if(pmaximum == nullptr){
+        pmaximum = new int;
         *pmaximum = num;
+    }
+    else {
+        if(*pmaximum < num){
+            *pmaximum = num;
+        }
     }
     if(pminimum == nullptr){
+        pminimum = new int;
         *pminimum = num;
     }
-    if(*pmaximum < num){
-        *pmaximum = num;
+    else{
+        if(*pminimum > num){
+            *pminimum = num;
+        }
     }
-    if(*pminimum > num){
-        *pminimum = num;
-    }
+    return;
 }
 
 //ポインタの書き換え：計算量O(1)
@@ -41,8 +48,9 @@ void DLL::update(int num){
 void DLL::insert(Node* pprenode, int num){
     update(num);
     Node* pnewnode = new Node;
-    Node* pnextnode = pprenode->next;
+    Node* pnextnode = pprenode->next; 
 
+    pnewnode->value = num;
     pnewnode->next = pnextnode;
     //headの次の要素だった場合の例外処理
     if(pprenode == head){
